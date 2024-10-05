@@ -18,7 +18,6 @@ def generate_bash_script(dsl, output):
         ""
     ]
 
-    frame_index = 0
     for step in dsl['story']:
         if 'send' in step:
             # Send command in the tmux session
@@ -36,12 +35,12 @@ def generate_bash_script(dsl, output):
             script_lines.append("done")
         elif 'capture' in step:
             # Capture the output to a file
-            received_filename = f"{session_name}.{frame_index}.received"
+            frame_name = step['capture']
+            received_filename = f"{session_name}.{frame_name}.received"
             script_lines.append(
                 f"# Capture the output in {received_filename}")
             script_lines.append(
                 f"tmux capture-pane -t {session_name} -p > {received_filename}")
-            frame_index += 1
         elif 'sleep' in step:
             # Sleep for the specified number of seconds
             script_lines.append(
@@ -50,22 +49,25 @@ def generate_bash_script(dsl, output):
 
     # Approval testing steps
     script_lines.append("")
-    for i in range(frame_index):
-        approved_filename = f"{session_name}.{i}.approved"
-        received_filename = f"{session_name}.{i}.received"
+    for step in dsl['story']:
+        if 'capture' in step:
+            frame_name = step['capture']
+            approved_filename = f"{session_name}.{frame_name}.approved"
+            received_filename = f"{session_name}.{frame_name}.received"
 
-        script_lines.append(f"# Touch the approved frame file for frame {i}")
-        script_lines.append(f"touch {approved_filename}")
+            script_lines.append(
+                f"# Touch the approved frame file {approved_filename}")
+            script_lines.append(f"touch {approved_filename}")
 
-        script_lines.append(
-            f"# Compare received and approved frames for frame {i}")
-        script_lines.append(
-            f"if ! diff {received_filename} {approved_filename} > /dev/null; then")
-        script_lines.append(
-            "    echo \"Frames do not match. Launching diff tool.\"")
-        script_lines.append(
-            f"    vimdiff {received_filename} {approved_filename}")
-        script_lines.append("    exit 1")
+            script_lines.append(
+                f"# Compare received and approved frames for {frame_name}")
+            script_lines.append(
+                f"if ! diff {received_filename} {approved_filename} > /dev/null; then")
+            script_lines.append(
+                "    echo \"Frames do not match. Launching diff tool.\"")
+            script_lines.append(
+                f"    vimdiff {received_filename} {approved_filename}")
+            script_lines.append("    exit 1")
 
     script_lines.append("echo \"All frames verified successfully.\"")
     script_lines.append("exit 0")
