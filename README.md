@@ -1,6 +1,6 @@
 tmux-story
 
-A e2e approval testing framework for cli apps that uses tmux.
+A e2e approval testing utility for cli apps that uses tmux.
 
 ## Example test
 
