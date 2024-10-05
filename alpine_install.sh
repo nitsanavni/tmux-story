@@ -9,3 +9,6 @@ python3 --version
 
 # Install Bash
 apk add bash
+
+apk add vim
+
