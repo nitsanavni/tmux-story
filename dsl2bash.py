@@ -15,6 +15,9 @@ def generate_bash_script(dsl, output):
         "",
         "# Wait briefly to ensure the session starts",
         "sleep 1",
+        "",
+        "# Initialize a flag to track if any comparison fails",
+        "any_failure=0",
         ""
     ]
 
@@ -64,11 +67,26 @@ def generate_bash_script(dsl, output):
             script_lines.append(
                 f"if ! diff {received_filename} {approved_filename} > /dev/null; then")
             script_lines.append(
-                "    echo \"Frames do not match. Launching diff tool.\"")
+                "    echo \"Frames do not match for {frame_name}.\"")
             script_lines.append(
-                f"    vimdiff {received_filename} {approved_filename}")
-            script_lines.append("    exit 1")
+                "    any_failure=1  # Flag that a failure occurred")
             script_lines.append("fi")  # Correctly close the if statement
+
+    script_lines.append("if [ $any_failure -ne 0 ]; then")
+    script_lines.append(
+        "    echo \"At least one frame did not match. Launching vimdiff for each failure.\"")
+    for step in dsl['story']:
+        if 'capture' in step:
+            frame_name = step['capture']
+            approved_filename = f"{session_name}.{frame_name}.approved"
+            received_filename = f"{session_name}.{frame_name}.received"
+            script_lines.append(
+                f"    if ! diff {received_filename} {approved_filename} > /dev/null; then")
+            script_lines.append(
+                f"        vimdiff {received_filename} {approved_filename}")
+            script_lines.append("    fi")
+    script_lines.append("    exit 1")
+    script_lines.append("fi")
 
     script_lines.append("echo \"All frames verified successfully.\"")
     script_lines.append("exit 0")
