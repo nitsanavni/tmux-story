@@ -1,5 +1,8 @@
-rm -f generated_example_test.sh
+#!/bin/bash
 
+source ven/bin/activate
+
+rm -f generated_example_test.sh
 
 cat ./example_test.yml | python3 ./dsl2bash.py > generated_example_test.sh
 
