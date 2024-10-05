@@ -86,7 +86,7 @@ def generate_bash_script(dsl, output):
             script_lines.append(
                 f"    if ! diff {received_filename} {approved_filename} > /dev/null; then")
             script_lines.append(
-                f"        vimdiff {received_filename} {approved_filename}")
+                f"        vim -d {received_filename} {approved_filename}")
             script_lines.append("    fi")
     script_lines.append("    exit 1")
     script_lines.append("fi")

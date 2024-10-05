@@ -48,10 +48,10 @@ tmux kill-session -t test_python_repl_print
 if [ $any_failure -ne 0 ]; then
     echo "At least one frame did not match. Launching vimdiff for each failure."
     if ! diff test_python_repl_print.frame1.received test_python_repl_print.frame1.approved > /dev/null; then
-        vimdiff test_python_repl_print.frame1.received test_python_repl_print.frame1.approved
+        vim -d test_python_repl_print.frame1.received test_python_repl_print.frame1.approved
     fi
     if ! diff test_python_repl_print.frame2.received test_python_repl_print.frame2.approved > /dev/null; then
-        vimdiff test_python_repl_print.frame2.received test_python_repl_print.frame2.approved
+        vim -d test_python_repl_print.frame2.received test_python_repl_print.frame2.approved
     fi
     exit 1
 fi
