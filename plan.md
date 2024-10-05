@@ -1,3 +1,4 @@
+- [ ] B the string 2**10 from the yml is evaluated by the shell in the bash script
 - OS compatibility?
   - we could at least fall back to 'human do task'; e.g. 'please install tmux'
 - nicer directory structure
