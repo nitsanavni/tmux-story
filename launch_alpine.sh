@@ -1,1 +1,1 @@
-docker run --rm -v $(pwd):/mnt -w /mnt alpine
+docker run --rm -it -v $(pwd):/mnt -w /mnt alpine
