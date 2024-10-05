@@ -1,4 +1,4 @@
-@./test/example_test.yml
+@./test/test.sh
+@./src/tmux-story
 
-in a new file
-let's add a new test, which does the same exact thing but the base cmd is bash --norc --noprofile
+let's use tmux-story in test.sh iso directly calling the python script
