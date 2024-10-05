@@ -1,0 +1,10 @@
+name: "Test Bash Print"
+base_cmd: "bash --norc --noprofile"
+story:
+  - send: "echo 'Hello, world!'"
+  - capture: "hello"
+  - send: "echo $((2**10))"
+  - wait-for-output: "1024"
+  - send: "echo 'Goodbye, world!'"
+  - capture: "goodbye"
+  - sleep: 1

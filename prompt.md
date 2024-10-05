@@ -1,4 +1,4 @@
-@./src/tmux-story
+@./test/example_test.yml
 
-before executing the script, cd to its directory
-and after cd, make ure to exec the right path
+in a new file
+let's add a new test, which does the same exact thing but the base cmd is bash --norc --noprofile
