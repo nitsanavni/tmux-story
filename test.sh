@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ven/bin/activate
+source venv/bin/activate
 
 rm -f generated_example_test.sh
 
