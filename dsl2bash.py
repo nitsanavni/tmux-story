@@ -6,38 +6,42 @@ import os
 
 
 def generate_bash_script(dsl, output):
+    session_name = dsl['name'].lower().replace(' ', '_')
     script_lines = [
         "#!/bin/bash",
         "",
         f"# Start a tmux session in detached mode to run {dsl['base_cmd']}",
-        f"tmux new-session -d -s {dsl['name'].lower().replace(' ', '_')} \"{dsl['base_cmd']}\"",
+        f"tmux new-session -d -s {session_name} \"{dsl['base_cmd']}\"",
         "",
         "# Wait briefly to ensure the session starts",
         "sleep 1",
         ""
     ]
 
+    frame_index = 0
     for step in dsl['story']:
         if 'send' in step:
             # Send command in the tmux session
             script_lines.append(f"# Send the command: {step['send']}")
             script_lines.append(
-                f"tmux send-keys -t {dsl['name'].lower().replace(' ', '_')} \"{step['send']}\" Enter")
+                f"tmux send-keys -t {session_name} \"{step['send']}\" Enter")
         elif 'wait-for-output' in step:
             # Wait until the expected output appears
             script_lines.append(
                 f"# Wait for the specific output: {step['wait-for-output']}")
             script_lines.append(
-                f"while ! tmux capture-pane -t {dsl['name'].lower().replace(' ', '_')} -p | grep -q \"{step['wait-for-output']}\"; do")
+                f"while ! tmux capture-pane -t {session_name} -p | grep -q \"{step['wait-for-output']}\"; do")
             script_lines.append(
                 "    sleep 0.1  # Poll every 100ms until the output is found")
             script_lines.append("done")
         elif 'capture' in step:
             # Capture the output to a file
+            received_filename = f"{session_name}.{frame_index}.received"
             script_lines.append(
-                f"# Capture the output in session.frame.received")
+                f"# Capture the output in {received_filename}")
             script_lines.append(
-                f"tmux capture-pane -t {dsl['name'].lower().replace(' ', '_')} -p > session.frame.received")
+                f"tmux capture-pane -t {session_name} -p > {received_filename}")
+            frame_index += 1
         elif 'sleep' in step:
             # Sleep for the specified number of seconds
             script_lines.append(
@@ -46,27 +50,30 @@ def generate_bash_script(dsl, output):
 
     # Approval testing steps
     script_lines.append("")
-    script_lines.append("# Touch the approved frame file")
-    script_lines.append("touch session.frame.approved")
+    for i in range(frame_index):
+        approved_filename = f"{session_name}.{i}.approved"
+        received_filename = f"{session_name}.{i}.received"
 
-    script_lines.append("# Compare received and approved frames")
-    script_lines.append(
-        "if ! diff session.frame.received session.frame.approved > /dev/null; then")
-    script_lines.append(
-        "    echo \"Frames do not match. Launching diff tool.\"")
-    script_lines.append(
-        "    vimdiff session.frame.received session.frame.approved")
-    script_lines.append("    exit 1")
-    script_lines.append("fi")
+        script_lines.append(f"# Touch the approved frame file for frame {i}")
+        script_lines.append(f"touch {approved_filename}")
 
-    script_lines.append("echo \"Frames verified successfully.\"")
+        script_lines.append(
+            f"# Compare received and approved frames for frame {i}")
+        script_lines.append(
+            f"if ! diff {received_filename} {approved_filename} > /dev/null; then")
+        script_lines.append(
+            "    echo \"Frames do not match. Launching diff tool.\"")
+        script_lines.append(
+            f"    vimdiff {received_filename} {approved_filename}")
+        script_lines.append("    exit 1")
+
+    script_lines.append("echo \"All frames verified successfully.\"")
     script_lines.append("exit 0")
 
     # Kill the tmux session
     script_lines.append("")
     script_lines.append(f"# Kill the tmux session after test")
-    script_lines.append(
-        f"tmux kill-session -t {dsl['name'].lower().replace(' ', '_')}")
+    script_lines.append(f"tmux kill-session -t {session_name}")
 
     # Write the generated script to the output (file or stdout)
     output.write("\n".join(script_lines))
