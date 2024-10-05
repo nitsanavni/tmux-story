@@ -2,9 +2,9 @@ name: "Test Python REPL Print"
 base_cmd: "python3 -q"
 story:
   - send: "print('Hello, world!')"
-  - wait-for-output: "Hello, world!"
-  - capture: "frame1"
+  - capture: "hello"
+  - send: "2**10"
+  - wait-for-output: "1024"
   - send: "print('Goodbye, world!')"
-  - wait-for-output: "Goodbye, world!"
-  - capture: "frame2"
+  - capture: "goodbye"
   - sleep: 1

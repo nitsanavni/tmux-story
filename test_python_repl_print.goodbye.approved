@@ -1,0 +1,7 @@
+>>> print('Hello, world!')
+Hello, world!
+>>> 2**10
+1024
+>>> print('Goodbye, world!')
+Goodbye, world!
+>>>
