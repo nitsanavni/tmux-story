@@ -1,14 +1,46 @@
 #!/bin/sh
 
-apk add tmux
+which tmux
+if [ $? -eq 0 ]; then
+    echo "tmux is already installed"
+else
+    apk add tmux
+fi
 tmux -V
 
-# Install Python
-apk add python3 py3-pip
+
+which python3
+if [ $? -eq 0 ]; then
+    echo "python3 is already installed"
+else
+    apk add python3
+fi
+
 python3 --version
 
-# Install Bash
-apk add bash
+which pip3
 
-apk add vim
+if [ $? -eq 0 ]; then
+    echo "pip3 is already installed"
+else
+    apk add py3-pip
+fi
+
+pip3 --version
+
+which bash
+
+if [ $? -eq 0 ]; then
+    echo "bash is already installed"
+else
+    apk add bash
+fi
+
+which vim
+
+if [ $? -eq 0 ]; then
+    echo "vim is already installed"
+else
+    apk add vim
+fi
 
