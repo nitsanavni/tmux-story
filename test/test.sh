@@ -2,7 +2,7 @@
 
 cd "$(dirname "$0")"
 
-source ../venv/bin/activate
+source ../env/venv/bin/activate
 
 rm -f generated_example_test.sh
 
