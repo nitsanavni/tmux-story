@@ -1,2 +1,14 @@
 - `build-and-test`
+  - clean machine - try on alpine in gitpod
+  - `install.sh`
+    - `alpine_install.sh`
+    - installs
+      - ? diff
+      - python
+      - tmux
+    - requirements.txt
+  - `test.sh`
+    - outer: generate -> verify
+    - inner: exec after rm received files
+
 - should we unlink received files on success?
