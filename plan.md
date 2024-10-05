@@ -1,4 +1,4 @@
-- [ ] B the string 2**10 from the yml is evaluated by the shell in the bash script
+- ci: scripts do not fail on err
 - OS compatibility?
   - we could at least fall back to 'human do task'; e.g. 'please install tmux'
 - nicer directory structure
@@ -12,6 +12,7 @@
 - should we unlink received files on success?
 
 
+- [x] B the string 2**10 from the yml is evaluated by the shell in the bash script
 - [x] `dev-install.sh`: setup a dev env on a clean gitpod
 - [x] `build-and-test`
   - clean machine - try on alpine in gitpod
