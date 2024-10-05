@@ -1,10 +1,12 @@
 #!/bin/bash
 
-source venv/bin/activate
+cd "$(dirname "$0")"
+
+source ../venv/bin/activate
 
 rm -f generated_example_test.sh
 
-cat ./example_test.yml | python3 ./dsl2bash.py > generated_example_test.sh
+cat ./example_test.yml | python3 ../src/dsl2bash.py > generated_example_test.sh
 
 diff ./generated_example_test.sh ./generated_example_test.sh.approved
 
