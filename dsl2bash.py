@@ -67,10 +67,15 @@ def generate_bash_script(dsl, output):
             script_lines.append(
                 f"if ! diff {received_filename} {approved_filename} > /dev/null; then")
             script_lines.append(
-                "    echo \"Frames do not match for {frame_name}.\"")
+                f"    echo \"Frames do not match for {frame_name}.\"")
             script_lines.append(
                 "    any_failure=1  # Flag that a failure occurred")
             script_lines.append("fi")  # Correctly close the if statement
+
+    # Kill the tmux session before exiting
+    script_lines.append("")
+    script_lines.append(f"# Kill the tmux session after test")
+    script_lines.append(f"tmux kill-session -t {session_name}")
 
     script_lines.append("if [ $any_failure -ne 0 ]; then")
     script_lines.append(
@@ -90,11 +95,6 @@ def generate_bash_script(dsl, output):
 
     script_lines.append("echo \"All frames verified successfully.\"")
     script_lines.append("exit 0")
-
-    # Kill the tmux session
-    script_lines.append("")
-    script_lines.append(f"# Kill the tmux session after test")
-    script_lines.append(f"tmux kill-session -t {session_name}")
 
     # Write the generated script to the output (file or stdout)
     output.write("\n".join(script_lines))
