@@ -1,5 +1,18 @@
-- `dev-install.sh`: setup a dev env on a clean gitpod
-- `build-and-test`
+- OS compatibility?
+  - we could at least fall back to 'human do task'; e.g. 'please install tmux'
+- nicer directory structure
+- less dependencies: don't need `vim -d`
+- aliases:
+  - verify, capture
+  - steps, story
+- outer/inner test: generation_test.sh / generated_script_test.sh
+- unit tests
+  - modularize
+- should we unlink received files on success?
+
+
+- [x] `dev-install.sh`: setup a dev env on a clean gitpod
+- [x] `build-and-test`
   - clean machine - try on alpine in gitpod
   - `install.sh`
     - `alpine_install.sh`
@@ -11,5 +24,3 @@
   - `test.sh`
     - outer: generate -> verify
     - inner: exec after rm received files
-
-- should we unlink received files on success?
