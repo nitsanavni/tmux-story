@@ -1,8 +1,6 @@
 import yaml
 import sys
 import argparse
-import subprocess
-import os
 
 
 def generate_bash_script(dsl, output):
