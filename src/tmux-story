@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Ensure a YAML file is passed as an argument
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <path/to/test_file.yml>"
+    exit 1
+fi
+
+# Set variables for file paths
+TEST_FILE="$1"
+OUTPUT_DIR=$(dirname "$TEST_FILE")
+BASENAME=$(basename "$TEST_FILE" .yml)
+OUTPUT_SCRIPT="$OUTPUT_DIR/generated_${BASENAME}.sh"
+
+# Generate the Bash script using dsl2bash.py
+python3 "$(dirname "$0")/dsl2bash.py" --test "$TEST_FILE" --out "$OUTPUT_SCRIPT"
+
+# Make the generated script executable
+chmod +x "$OUTPUT_SCRIPT"
+
+# Execute the generated script
+"$OUTPUT_SCRIPT"
