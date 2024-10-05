@@ -1,3 +1,5 @@
+#!/bin/sh
+
 apk add tmux
 tmux -V
 
