@@ -4,7 +4,7 @@
 - nicer directory structure
 - less dependencies: don't need `vim -d`
 - aliases:
-  - verify, capture
+  - verify, capture, frame
   - steps, story
 - outer/inner test: generation_test.sh / generated_script_test.sh
 - unit tests
