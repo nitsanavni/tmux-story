@@ -1,9 +1,10 @@
 name: "Test Python REPL Print"
-base_cmd: "python3"
+base_cmd: "python3 -q"
 story:
-  - send: "print('Hello, world!')"   # Sends the print command
-  - wait-for-output: "Hello, world!" # Wait until the output "Hello, world!" is visible
-  - capture: "frame1"                # Capture the output after "Hello, world!" is printed
-  - send: "exit()"                   # Exit the Python REPL
-  - sleep: 1                         # Wait 1 second before capturing the next frame (intentional wait)
-  - capture: "frame2"                # Capture the output again after exit
+  - send: "print('Hello, world!')"
+  - wait-for-output: "Hello, world!"
+  - capture: "frame1"
+  - send: "print('Goodbye, world!')"
+  - wait-for-output: "Goodbye, world!"
+  - capture: "frame2"
+  - sleep: 1
