@@ -1,7 +1,7 @@
-$ echo 'Hello, world!'
-Hello, world!
-$ echo 1024
+$echo Hello,world!
+Hello,world!
+$echo $((2**10))
 1024
-$ echo 'Goodbye, world!'
-Goodbye, world!
+$echo Goodbye,world!
+Goodbye,world!
 $

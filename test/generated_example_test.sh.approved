@@ -9,18 +9,18 @@ sleep 1
 # Initialize a flag to track if any comparison fails
 any_failure=0
 
-# Send the command: print('Hello, world!')
-tmux send-keys -t test_python_repl_print "print('Hello, world!')" Enter
+# Send the command: print("Hello, world!")
+tmux send-keys -t test_python_repl_print 'print("Hello, world!")' Enter
 # Capture the output in test_python_repl_print.hello.received
 tmux capture-pane -t test_python_repl_print -p | sed '/^$/d' > test_python_repl_print.hello.received
 # Send the command: 2**10
-tmux send-keys -t test_python_repl_print "2**10" Enter
+tmux send-keys -t test_python_repl_print '2**10' Enter
 # Wait for the specific output: 1024
 while ! tmux capture-pane -t test_python_repl_print -p | grep -q "1024"; do
     sleep 0.1  # Poll every 100ms until the output is found
 done
-# Send the command: print('Goodbye, world!')
-tmux send-keys -t test_python_repl_print "print('Goodbye, world!')" Enter
+# Send the command: print("Goodbye, world!")
+tmux send-keys -t test_python_repl_print 'print("Goodbye, world!")' Enter
 # Capture the output in test_python_repl_print.goodbye.received
 tmux capture-pane -t test_python_repl_print -p | sed '/^$/d' > test_python_repl_print.goodbye.received
 # Wait for 1 second(s) before next action

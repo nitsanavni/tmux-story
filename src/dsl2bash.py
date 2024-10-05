@@ -22,10 +22,12 @@ def generate_bash_script(dsl, output):
 
     for step in dsl['story']:
         if 'send' in step:
-            # Send command in the tmux session
+            # Send command in the tmux session, ensuring no expression expansion
+            # Escape quotes if necessary
+            command = step['send'] # .replace('"', '\\"')
             script_lines.append(f"# Send the command: {step['send']}")
             script_lines.append(
-                f"tmux send-keys -t {session_name} \"{step['send']}\" Enter")
+                f"tmux send-keys -t {session_name} '{command}' Enter")
         elif 'wait-for-output' in step:
             # Wait until the expected output appears
             script_lines.append(
