@@ -26,3 +26,9 @@ The two captured frames in this story are verified, in the approval-tests way.
 ```
 
 This script supports: Alpine Linux.
+
+## Install
+
+```sh
+./install.sh
+```
