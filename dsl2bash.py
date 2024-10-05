@@ -1,6 +1,8 @@
 import yaml
 import sys
 import argparse
+import subprocess
+import os
 
 
 def generate_bash_script(dsl, output):
@@ -33,14 +35,32 @@ def generate_bash_script(dsl, output):
         elif 'capture' in step:
             # Capture the output to a file
             script_lines.append(
-                f"# Capture the output in {step['capture']}.received")
+                f"# Capture the output in session.frame.received")
             script_lines.append(
-                f"tmux capture-pane -t {dsl['name'].lower().replace(' ', '_')} -p > {step['capture']}.received")
+                f"tmux capture-pane -t {dsl['name'].lower().replace(' ', '_')} -p > session.frame.received")
         elif 'sleep' in step:
             # Sleep for the specified number of seconds
             script_lines.append(
                 f"# Wait for {step['sleep']} second(s) before next action")
             script_lines.append(f"sleep {step['sleep']}")
+
+    # Approval testing steps
+    script_lines.append("")
+    script_lines.append("# Touch the approved frame file")
+    script_lines.append("touch session.frame.approved")
+
+    script_lines.append("# Compare received and approved frames")
+    script_lines.append(
+        "if ! diff session.frame.received session.frame.approved > /dev/null; then")
+    script_lines.append(
+        "    echo \"Frames do not match. Launching diff tool.\"")
+    script_lines.append(
+        "    vimdiff session.frame.received session.frame.approved")
+    script_lines.append("    exit 1")
+    script_lines.append("fi")
+
+    script_lines.append("echo \"Frames verified successfully.\"")
+    script_lines.append("exit 0")
 
     # Kill the tmux session
     script_lines.append("")
