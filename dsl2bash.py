@@ -68,6 +68,7 @@ def generate_bash_script(dsl, output):
             script_lines.append(
                 f"    vimdiff {received_filename} {approved_filename}")
             script_lines.append("    exit 1")
+            script_lines.append("fi")  # Correctly close the if statement
 
     script_lines.append("echo \"All frames verified successfully.\"")
     script_lines.append("exit 0")
