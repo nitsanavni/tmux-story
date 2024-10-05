@@ -4,7 +4,7 @@ apk add tmux
 tmux -V
 
 # Install Python
-apk add python3
+apk add python3 pip3
 python3 --version
 
 # Install Bash
