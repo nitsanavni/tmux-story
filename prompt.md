@@ -1,3 +1,3 @@
-@./example_test.yml
+@./dsl2bash.py
 
-rm all comments
+isntead of frame.txt -> frame.received

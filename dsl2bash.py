@@ -33,9 +33,9 @@ def generate_bash_script(dsl, output):
         elif 'capture' in step:
             # Capture the output to a file
             script_lines.append(
-                f"# Capture the output in {step['capture']}.txt")
+                f"# Capture the output in {step['capture']}.received")
             script_lines.append(
-                f"tmux capture-pane -t {dsl['name'].lower().replace(' ', '_')} -p > {step['capture']}.txt")
+                f"tmux capture-pane -t {dsl['name'].lower().replace(' ', '_')} -p > {step['capture']}.received")
         elif 'sleep' in step:
             # Sleep for the specified number of seconds
             script_lines.append(
