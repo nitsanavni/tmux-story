@@ -16,7 +16,7 @@ while ! tmux capture-pane -t test_python_repl_print -p | grep -q "Hello, world!"
     sleep 0.1  # Poll every 100ms until the output is found
 done
 # Capture the output in test_python_repl_print.frame1.received
-tmux capture-pane -t test_python_repl_print -p > test_python_repl_print.frame1.received
+tmux capture-pane -t test_python_repl_print -p | sed '/^$/d' > test_python_repl_print.frame1.received
 # Send the command: print('Goodbye, world!')
 tmux send-keys -t test_python_repl_print "print('Goodbye, world!')" Enter
 # Wait for the specific output: Goodbye, world!
@@ -24,7 +24,7 @@ while ! tmux capture-pane -t test_python_repl_print -p | grep -q "Goodbye, world
     sleep 0.1  # Poll every 100ms until the output is found
 done
 # Capture the output in test_python_repl_print.frame2.received
-tmux capture-pane -t test_python_repl_print -p > test_python_repl_print.frame2.received
+tmux capture-pane -t test_python_repl_print -p | sed '/^$/d' > test_python_repl_print.frame2.received
 # Wait for 1 second(s) before next action
 sleep 1
 

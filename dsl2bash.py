@@ -1,6 +1,7 @@
 import yaml
 import sys
 import argparse
+import subprocess
 
 
 def generate_bash_script(dsl, output):
@@ -38,10 +39,9 @@ def generate_bash_script(dsl, output):
             # Capture the output to a file
             frame_name = step['capture']
             received_filename = f"{session_name}.{frame_name}.received"
+            script_lines.append(f"# Capture the output in {received_filename}")
             script_lines.append(
-                f"# Capture the output in {received_filename}")
-            script_lines.append(
-                f"tmux capture-pane -t {session_name} -p > {received_filename}")
+                f"tmux capture-pane -t {session_name} -p | sed '/^$/d' > {received_filename}")
         elif 'sleep' in step:
             # Sleep for the specified number of seconds
             script_lines.append(
@@ -68,7 +68,7 @@ def generate_bash_script(dsl, output):
                 f"    echo \"Frames do not match for {frame_name}.\"")
             script_lines.append(
                 "    any_failure=1  # Flag that a failure occurred")
-            script_lines.append("fi")  # Correctly close the if statement
+            script_lines.append("fi")
 
     # Kill the tmux session before exiting
     script_lines.append("")
@@ -96,7 +96,7 @@ def generate_bash_script(dsl, output):
 
     # Write the generated script to the output (file or stdout)
     output.write("\n".join(script_lines))
-    output.write("\n")  # Ensure the last line ends with a newline
+    output.write("\n")
 
 
 def main():
