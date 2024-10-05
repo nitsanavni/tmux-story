@@ -1,3 +1,4 @@
-@./.github/workflows/build-and-test.yml
+@./example_test.yml
+@./dsl2bash.py
 
-don't run on changes to *.md, LICENSE
+add a README.md file
