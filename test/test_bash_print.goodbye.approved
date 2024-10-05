@@ -4,4 +4,4 @@ $echo $((2**10))
 1024
 $echo Goodbye,world!
 Goodbye,world!
-$
+$exit

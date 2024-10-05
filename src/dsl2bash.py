@@ -24,10 +24,17 @@ def generate_bash_script(dsl, output):
         if 'send' in step:
             # Send command in the tmux session, ensuring no expression expansion
             # Escape quotes if necessary
-            command = step['send'] # .replace('"', '\\"')
+            command = step['send']  # .replace('"', '\\"')
             script_lines.append(f"# Send the command: {step['send']}")
             script_lines.append(
                 f"tmux send-keys -t {session_name} '{command}' Enter")
+        elif 'send-no-enter' in step:
+            # Send command in the tmux session without pressing Enter
+            command = step['send-no-enter']
+            script_lines.append(
+                f"# Send the command without Enter: {step['send-no-enter']}")
+            script_lines.append(
+                f"tmux send-keys -t {session_name} '{command}'")
         elif 'wait-for-output' in step:
             # Wait until the expected output appears
             script_lines.append(
