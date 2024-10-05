@@ -1,7 +1,3 @@
-@./dsl2bash.py
-@./generated_example_test.sh
+@./.github/workflows/build-and-test.yml
 
-make sure to update dsl2bash.py
-
-I'd like to strip the captured frames:
-meaning, don't leave trailing empty lines
+don't run on changes to *.md, LICENSE
