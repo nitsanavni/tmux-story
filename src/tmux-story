@@ -18,5 +18,8 @@ python3 "$(dirname "$0")/dsl2bash.py" --test "$TEST_FILE" --out "$OUTPUT_SCRIPT"
 # Make the generated script executable
 chmod +x "$OUTPUT_SCRIPT"
 
+# Change to the directory where the generated script is located
+cd "$OUTPUT_DIR"
+
 # Execute the generated script
-"$OUTPUT_SCRIPT"
+exec "./$(basename "$OUTPUT_SCRIPT")"
