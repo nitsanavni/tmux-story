@@ -1,3 +1,4 @@
+- `dev-install.sh`: setup a dev env on a clean gitpod
 - `build-and-test`
   - clean machine - try on alpine in gitpod
   - `install.sh`
