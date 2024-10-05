@@ -1,7 +1,7 @@
 name: "Test Bash Print"
 base_cmd: "bash --norc --noprofile"
 story:
-  - send: "clear"
+  - send: "export PS1='$ ' && clear"
   - send: "echo 'Hello, world!'"
   - capture: "hello"
   - send: "echo $((2**10))"
