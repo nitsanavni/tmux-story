@@ -1,3 +1,4 @@
+- if the base_cmd fails, need to capture the err
 - ci: scripts do not fail on err
 - OS compatibility?
   - we could at least fall back to 'human do task'; e.g. 'please install tmux'
