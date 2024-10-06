@@ -1,4 +1,5 @@
 #!/bin/sh
+set -euo pipefail
 
 which tmux
 if [ $? -eq 0 ]; then
