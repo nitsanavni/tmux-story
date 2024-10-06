@@ -1,47 +1,14 @@
-#!/bin/sh
-set -euo pipefail
+#!/bin/sh -e
 
-which tmux
-if [ $? -eq 0 ]; then
-    echo "tmux is already installed"
-else
-    apk add tmux
-fi
+which tmux || apk add tmux
 tmux -V
 
-
-which python3
-if [ $? -eq 0 ]; then
-    echo "python3 is already installed"
-else
-    apk add python3
-fi
-
+which python3 || apk add python3
 python3 --version
 
-which pip3
-
-if [ $? -eq 0 ]; then
-    echo "pip3 is already installed"
-else
-    apk add py3-pip
-fi
-
+which pip3 || apk add py3-pip
 pip3 --version
 
-which bash
+which bash || apk add bash
 
-if [ $? -eq 0 ]; then
-    echo "bash is already installed"
-else
-    apk add bash
-fi
-
-which vim
-
-if [ $? -eq 0 ]; then
-    echo "vim is already installed"
-else
-    apk add vim
-fi
-
+which vim || apk add vim
