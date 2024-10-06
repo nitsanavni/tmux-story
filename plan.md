@@ -1,3 +1,4 @@
+- constraints.txt?
 - if the base_cmd fails, need to capture the err
 - ci: scripts do not fail on err
 - OS compatibility?
