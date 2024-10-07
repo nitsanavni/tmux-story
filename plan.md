@@ -1,3 +1,5 @@
+- yaml schema
+- idea: dsl interpreter, exec each step at a time
 - constraints.txt?
 - if the base_cmd fails, need to capture the err
 - ci: scripts do not fail on err
