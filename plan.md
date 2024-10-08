@@ -1,3 +1,5 @@
+- quotes escape issue
+  - try with `send: [|>]` style
 - trap session kill
 - capture: default name
 - capture: add field to allow capturing more than visible on pane

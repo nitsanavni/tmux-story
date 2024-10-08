@@ -2,6 +2,6 @@ name: timeout
 base_cmd: bash --norc --noprofile
 story:
   - send: export PS1='$ ' && clear
-  - send: echo 'This will timeout'
+  - send: echo "This will timeout"
   - wait-for-output: This string will never appear
   - capture: result
