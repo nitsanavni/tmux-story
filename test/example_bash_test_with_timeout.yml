@@ -1,0 +1,14 @@
+name: "Test Bash Timeout"
+base_cmd: "bash --norc --noprofile"
+story:
+  - send: "export PS1='$ ' && clear"
+  - send: "echo 'Hello, world!'"
+  - capture: "hello"
+  - send: "echo $((2**10))"
+  - wait-for-output: "1024"
+  - send: "echo 'This will timeout'"
+  - wait-for-output: "This string will never appear"
+  - timeout: 5
+  - send: "echo 'Goodbye, world!'"
+  - send-no-enter: "exit"
+  - capture: "goodbye"
