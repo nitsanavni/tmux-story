@@ -1,3 +1,4 @@
+- capture: default name
 - capture: add field to allow capturing more than visible on pane
 - wait-for-output should timeout
 - yaml schema
