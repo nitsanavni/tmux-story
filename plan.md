@@ -1,3 +1,5 @@
+- capture: add field to allow capturing more than visible on pane
+- wait-for-output should timeout
 - yaml schema
 - idea: dsl interpreter, exec each step at a time
 - constraints.txt?
