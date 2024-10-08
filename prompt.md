@@ -1,4 +1,9 @@
-@./test/example_bash_test.yml
+@./test/timeout.yml
+@./test/generated_timeout.sh
+@./src/dsl2bash.py
 
-in a new test file
-let's add one more test like this to sho that wait-for-output should timeout
+only change this file: dsl2bash.py
+
+do this:
+add support for timeout in the case of wait-for-output
+default to 1 second

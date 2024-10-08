@@ -23,36 +23,43 @@ def generate_bash_script(dsl, output):
     for step in dsl['story']:
         if 'send' in step:
             # Send command in the tmux session, ensuring no expression expansion
-            # Escape quotes if necessary
-            command = step['send']  # .replace('"', '\\"')
+            command = step['send']
             script_lines.append(f"# Send the command: {step['send']}")
             script_lines.append(
                 f"tmux send-keys -t {session_name} '{command}' Enter")
         elif 'send-no-enter' in step:
-            # Send command in the tmux session without pressing Enter
             command = step['send-no-enter']
             script_lines.append(
                 f"# Send the command without Enter: {step['send-no-enter']}")
             script_lines.append(
                 f"tmux send-keys -t {session_name} '{command}'")
         elif 'wait-for-output' in step:
-            # Wait until the expected output appears
+            # Add timeout support for waiting for the expected output
+            timeout = step.get('timeout', 1)  # Default to 1 second
             script_lines.append(
-                f"# Wait for the specific output: {step['wait-for-output']}")
+                f"# Wait for the specific output: {step['wait-for-output']} or timeout after {timeout} second(s)")
+            script_lines.append(
+                f"end_time=$((SECONDS+{timeout}))")
             script_lines.append(
                 f"while ! tmux capture-pane -t {session_name} -p | grep -q \"{step['wait-for-output']}\"; do")
+            script_lines.append(
+                "    if [ $SECONDS -ge $end_time ]; then")
+            script_lines.append(
+                f"        echo \"Timeout reached while waiting for {step['wait-for-output']}\"")
+            script_lines.append(
+                "        any_failure=1")
+            script_lines.append("        break")
+            script_lines.append("    fi")
             script_lines.append(
                 "    sleep 0.1  # Poll every 100ms until the output is found")
             script_lines.append("done")
         elif 'capture' in step:
-            # Capture the output to a file
             frame_name = step['capture']
             received_filename = f"{session_name}.{frame_name}.received"
             script_lines.append(f"# Capture the output in {received_filename}")
             script_lines.append(
                 f"tmux capture-pane -t {session_name} -p | sed '/^$/d' > {received_filename}")
         elif 'sleep' in step:
-            # Sleep for the specified number of seconds
             script_lines.append(
                 f"# Wait for {step['sleep']} second(s) before next action")
             script_lines.append(f"sleep {step['sleep']}")
