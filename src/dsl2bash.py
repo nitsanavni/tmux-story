@@ -46,8 +46,6 @@ def generate_bash_script(dsl, output):
                 "    if [ $SECONDS -ge $end_time ]; then")
             script_lines.append(
                 f"        echo \"Timeout reached while waiting for {step['wait-for-output']}\"")
-            script_lines.append(
-                "        any_failure=1")
             script_lines.append("        break")
             script_lines.append("    fi")
             script_lines.append(

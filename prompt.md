@@ -5,5 +5,4 @@
 only change this file: dsl2bash.py
 
 do this:
-add support for timeout in the case of wait-for-output
-default to 1 second
+don't consider timeout an failure
